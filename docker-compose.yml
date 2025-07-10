@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:17
+    container_name: database_cine
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: movies_db
+  
+  mailpit:
+    image: "axllent/mailpit:latest"
+    container_name: mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+  
+  backend:
+    build:
+      context: ./back
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./back:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - mailpit
+
+volumes:
+  pgdata:
