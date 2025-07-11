@@ -1,4 +1,3 @@
-# from django.conf import settings
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -13,4 +12,4 @@ class Movie(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
 
 def __str__(self):
-    return f"{self.title} ({self.release_date.year})"
+    return self.title
