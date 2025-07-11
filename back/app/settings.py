@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'app.realisators',
     'app.actors',
     'app.categories',
+    'app.images',
 ]
 
 MIDDLEWARE = [

@@ -21,6 +21,7 @@ from app.movies.views import MovieViewSet
 from app.realisators.views import RealisatorViewSet
 from app.actors.views import ActorViewSet
 from app.categories.views import CategorieViewSet
+from app.images.views import ImageViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -28,6 +29,7 @@ router.register(r'movies', MovieViewSet)
 router.register(r'realisators', RealisatorViewSet)
 router.register(r'actors', ActorViewSet)
 router.register(r'categories', CategorieViewSet)
+router.register(r'images', ImageViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
