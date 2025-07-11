@@ -5,6 +5,6 @@ User = get_user_model()
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "email", "role")
+    list_display = ("id_user", "username", "email", "role", "created_at")
     list_filter = ("role")
     search_fields = ("username", "email")

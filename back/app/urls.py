@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from app.users.views import UserViewSet
-from app.movies.views import MovieViewSet
+from app.movies.views import ( MovieViewSet, ActorMovieViewSet, RealisatorMovieViewSet, MovieCategorieViewSet, ImageMovieViewSet, UserRatingViewSet, UserFavoriteViewSet, UserWatchlistMovieViewSet )
 from app.realisators.views import RealisatorViewSet
 from app.actors.views import ActorViewSet
 from app.categories.views import CategorieViewSet
@@ -30,6 +30,14 @@ router.register(r'realisators', RealisatorViewSet)
 router.register(r'actors', ActorViewSet)
 router.register(r'categories', CategorieViewSet)
 router.register(r'images', ImageViewSet)
+
+router.register(r'actor-movies', ActorMovieViewSet)
+router.register(r'realisator-movies', RealisatorMovieViewSet)
+router.register(r'movie-categories', MovieCategorieViewSet)
+router.register(r'image-movies', ImageMovieViewSet)
+router.register(r'user-ratings', UserRatingViewSet)
+router.register(r'user-favorites', UserFavoriteViewSet)
+router.register(r'user-watchlist', UserWatchlistMovieViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

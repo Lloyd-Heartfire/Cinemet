@@ -1,6 +1,7 @@
 from django.db import models
 
 class Image(models.Model):
+    id_image = models.AutoField(primary_key = True)
     name = models.CharField(max_length=255, blank=True)
     url = models.TextField()
     is_main = models.BooleanField(default=False)

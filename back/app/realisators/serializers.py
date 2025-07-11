@@ -4,4 +4,4 @@ from .models import Realisator
 class RealisatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Realisator
-        fields = ["id", "first_name", "last_name", "created_at"]
+        fields = ["id_realisator", "first_name", "last_name", "created_at"]
