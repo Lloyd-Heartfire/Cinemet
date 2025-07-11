@@ -6,7 +6,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "email", "password", "role", "created_at"]
+        fields = ["id_user", "username", "email", "password", "role", "created_at"]
         extra_kwargs = {
             "password": {"write_only": True}
         }
