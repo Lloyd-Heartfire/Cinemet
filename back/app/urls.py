@@ -20,12 +20,14 @@ from app.users.views import UserViewSet
 from app.movies.views import MovieViewSet
 from app.realisators.views import RealisatorViewSet
 from app.actors.views import ActorViewSet
+from app.categories.views import CategorieViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'movies', MovieViewSet)
 router.register(r'realisators', RealisatorViewSet)
 router.register(r'actors', ActorViewSet)
+router.register(r'categories', CategorieViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
