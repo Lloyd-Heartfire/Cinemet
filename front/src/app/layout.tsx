@@ -11,9 +11,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className = "bg-black" cz-shortcut-listen="true">
-      <Navbar />
-      <main className = "pt-20">{children}</main>
-    </body>
+        <Navbar />
+        <main className = "pt-20">{children}</main>
+      </body>
     </html>
   );
 }

@@ -14,6 +14,8 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             const res = await axios.post("http://localhost:8000/api/token", form);
+            
+            //Stockage du token
             localStorage.setItem("token", res.data.access);
 
             //Redirige vers la page d'accueil
