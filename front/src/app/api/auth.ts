@@ -4,7 +4,7 @@ const BASE_URL = "http://localhost:8000"
 
 // Envoi des identifiants afin d'obtenir un access/refresh token
 export async function login(username: string, password: string) {
-    const res = await axios.post(`${BASE_URL}/token/`, {username, password});
+    const res = await axios.post(`${BASE_URL}/api/token/`, {username, password});
     const {access, refresh} = res.data;
 
     // Stockage des tokens en localStorage
