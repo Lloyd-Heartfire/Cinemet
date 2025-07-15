@@ -1,21 +1,21 @@
 'use client';
 
 import {useState} from 'react';
-import axios from 'axios';
 import {useRouter} from 'next/navigation';
+import {register} from '@/app/api/auth';
 
 export default function RegisterPage() {
-    const [form, setForm] = useState({ username: "", email: "", password: ""});
+    const [form, setForm] = useState({username: "", email: "", password: ""});
     const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value });
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await axios.post("http://localhost:8000/api/register/", form);
+    const handleSubmit = async (e: React.FormEvent) => {e.preventDefault();
+    try {
+      await register(form.username, form.email, form.password);
             alert("Compte créé ! Bienvenue sur Cinemet !");
             router.push("/login");
-        } catch (err) {
+        } catch (err: any) {
+            console.error('Erreur:', err.response?.data || err.message);
             alert("Erreur lors de l'inscription");
         }
     };

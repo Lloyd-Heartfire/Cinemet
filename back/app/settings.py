@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'app.actors',
     'app.categories',
     'app.images',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -157,3 +159,7 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]

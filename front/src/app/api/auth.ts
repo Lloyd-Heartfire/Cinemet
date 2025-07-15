@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:8000/api"
+const BASE_URL = "http://localhost:8000"
 
 // Envoi des identifiants afin d'obtenir un access/refresh token
 export async function login(username: string, password: string) {
@@ -15,7 +15,7 @@ export async function login(username: string, password: string) {
 }
 
 export async function register(username: string, email: string, password: string) {
-    const res = await axios.post(`${BASE_URL}/register`, {username, email, password,});
+    const res = await axios.post(`${BASE_URL}/register/`, {username, email, password,});
 
     return res.data;
 }
