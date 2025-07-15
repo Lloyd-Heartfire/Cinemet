@@ -8,7 +8,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <nav className = "fixed top-0 left-0 w-full bg-black shadow z-50 px-6 py-4 flex justify-between items-center">
+        <nav className = "fixed top-0 left-0 w-full bg-black z-50 px-6 py-4 flex justify-between items-center">
             <Link href = "/" className = "text-yellow-400 text-xl font-bold hover:text-yellow-300 transition">
                 Cinemet
             </Link>
