@@ -3,10 +3,19 @@ from .models import Movie
 from .models import ( RealisatorMovie, MovieCategorie, ActorMovie, ImageMovie, UserRating, UserFavorite, UserWatchlistMovie )
 
 class MovieSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
-        fields = ["id_movie", "title", "duration", "description", "trailer_url", "release_date", "average_rating", "created_at"]
+        fields = ["id_movie", "title", "duration", "description", "trailer_url", "release_date", "average_rating", "created_at", "image_url"]
         read_only_fields = ["average_rating", "created_at"]
+
+    def get_image_url(self, obj):
+        request = self.context.get("request")
+        image = ImageMovie.objects.filter(movie = obj).first()
+        if image and image.image and request:
+            return request.build_absolute_uri(image.image.url)
+        return None
 
 class RealisatorMovieSerializer(serializers.ModelSerializer):
     class Meta:

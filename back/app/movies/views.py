@@ -7,6 +7,9 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    def get_serializer_context(self):
+        return {"request": self.request}
+
 class ActorMovieViewSet(viewsets.ModelViewSet):
     queryset = ActorMovie.objects.all()
     serializer_class = ActorMovieSerializer
