@@ -1,41 +1,86 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import {getFavorites, getWatchList} from '@/app/api/movies';
+import { useEffect, useState, lazy, Suspense } from 'react';
+import axios from 'axios';
+import { getToken } from '@/app/api/auth';
+
+const BASE_URL = 'http://localhost:8000';
+
+// Lazy-loaded components
+const UserInfoBlock = lazy(() => import('@/components/UserInfoBlock'));
+const FavoritesGrid = lazy(() => import('@/components/FavoritesGrid'));
+const WatchlistGrid = lazy(() => import('@/components/WatchlistGrid'));
+
+interface Movie {
+  id_movie: number;
+  title: string;
+  image_url?: string;
+  categorie_name?: string;
+  duration?: number;
+  release_date?: string;
+  average_rating?: number;
+}
+
+interface User {
+  id_user: number;
+  username: string;
+  email: string;
+  role: string;
+}
 
 export default function ProfilePage() {
-    const [favorites, setFavorites] = useState([]);
-    const [watchlist, setWatchlist] = useState([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [favorites, setFavorites] = useState<Movie[]>([]);
+  const [watchlist, setWatchlist] = useState<Movie[]>([]);
 
-    useEffect(() => {
-        getFavorites().then(setFavorites);
-        getWatchList().then(setWatchlist);
-    }, []);
+  useEffect(() => {
+    const token = getToken();
+    if (!token) return;
+
+    const fetchData = async () => {
+      try {
+        const meRes = await axios.get(`${BASE_URL}/me/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(meRes.data);
+
+        const favRes = await axios.get(`${BASE_URL}/user-favorites/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites(favRes.data);
+
+        const watchRes = await axios.get(`${BASE_URL}/user-watchlist/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setWatchlist(watchRes.data);
+      } catch (error) {
+        console.error('Erreur profil:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="p-8 text-white">
-      <h1 className="text-yellow-400 text-3xl font-bold mb-6 text-center">Mon Profil</h1>
+    <div className="px-6 py-10 bg-gradient-to-br from-black via-gray-950 to-gray-900 min-h-screen text-white">
+      <h1 className="text-4xl font-bold mb-8 text-center">Profil utilisateur</h1>
 
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4">Films favoris</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {favorites.map((movie: any) => (
-            <div key={movie.id_movie} className="bg-gray-800 p-4 rounded">
-              <p className="text-yellow-300 font-bold">{movie.title}</p>
-            </div>
-          ))}
-        </div>
+      <Suspense fallback={<p className="text-center text-gray-400 mb-8">Chargement des infos utilisateur…</p>}>
+        {user && <UserInfoBlock user={user} />}
+      </Suspense>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Favoris</h2>
+        <Suspense fallback={<p className="text-gray-500">Chargement des favoris…</p>}>
+          <FavoritesGrid movies={favorites} />
+        </Suspense>
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4">Ma watchlist</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {watchlist.map((movie: any) => (
-            <div key={movie.id_movie} className="bg-gray-800 p-4 rounded">
-              <p className="text-blue-300 font-bold">{movie.title}</p>
-            </div>
-          ))}
-        </div>
+        <h2 className="text-2xl font-semibold mb-4">Watchlist</h2>
+        <Suspense fallback={<p className="text-gray-500">Chargement de la watchlist…</p>}>
+          <WatchlistGrid movies={watchlist} />
+        </Suspense>
       </section>
     </div>
   );

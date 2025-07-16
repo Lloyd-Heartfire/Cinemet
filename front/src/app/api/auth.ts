@@ -40,6 +40,22 @@ export async function refreshAccessToken() {
     return access;
 }
 
+// Récupère les infos de l'utilisateur
+export async function getUserInfo() {
+    const token = getToken();
+    console.log("Token envoyé à /me :", token);
+
+    if (!token) throw new Error("Aucun token présent.");
+
+    const res = await axios.get(`${BASE_URL}/me/`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    return res.data;
+}
+
 // Déconnexion de l'utilisateur
 export function logout() {
     localStorage.removeItem("token");
