@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
-from app.users.views import (UserViewSet, RegisterView)
+from app.users.views import (UserViewSet, RegisterView, MeView)
 from app.movies.views import ( MovieViewSet, ActorMovieViewSet, RealisatorMovieViewSet, MovieCategorieViewSet, ImageMovieViewSet, UserRatingViewSet, UserFavoriteViewSet, UserWatchlistMovieViewSet )
 from app.realisators.views import RealisatorViewSet
 from app.actors.views import ActorViewSet
@@ -43,6 +43,7 @@ router.register(r'user-watchlist', UserWatchlistMovieViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='register'),
+    path('me/', MeView.as_view(), name='me'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-auth/', include('rest_framework.urls')),
