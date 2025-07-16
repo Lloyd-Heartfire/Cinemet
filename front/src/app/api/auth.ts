@@ -22,8 +22,11 @@ export async function register(username: string, email: string, password: string
 
 // Récupère le token access depuis localStorage
 export function getToken() {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) console.error(' Aucun token trouvé dans localStorage');
+    return token;
 }
+
 
 // Rafraîchit le token access si celui-ci a expiré
 export async function refreshAccessToken() {
